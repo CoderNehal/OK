@@ -7,6 +7,7 @@ function App() {
 	const [result, setResult] = useState(null);
 
 	const handleFileUpload = (newResult) => {
+    alert("File Uploaded !")
 		setResult(newResult);
 	};
 

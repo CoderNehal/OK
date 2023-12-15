@@ -25,7 +25,7 @@ const FileUpload = ({ onFileUpload }) => {
 				})
 				.catch((error) => console.error('Error uploading file:', error));
 		}
-		onFileUpload('test');
+		// onFileUpload('test');
 	};
 
 	useEffect(() => {

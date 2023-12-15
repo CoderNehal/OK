@@ -25,6 +25,8 @@ urlpatterns = [
     # path('admin/', admin.site.urls),
     path('hello_world/', views.hello_world, name='hello_world'),
     path('upload/', views.upload_file, name='upload_file'),
+    path('classifier/', views.classifier, name='classifier'),
+    path('decision_tree/', views.decision_tree, name='decision_tree'),
     path('plot_dendrogram/', views.plot_dendrogram, name='plot_dendrogram'),
     path('plot_kMeans/', views.plot_KMeans, name='plot_KMeans'),
     path('plot_kMedoids/', views.plot_KMedoids, name='plot_KMedoids'),
