@@ -31,6 +31,7 @@ urlpatterns = [
     path('plot_BIRCH/', views.plot_BIRCH, name='plot_BIRCH'),
     path('plot_DBSCAN/', views.plot_DBSCAN, name='plot_DBSCAN'),
     path('association_rule/', views.association_rule, name='association_rule'),
+    path('crawlers/', views.crawlers, name='crawlers'),
 
 
 
