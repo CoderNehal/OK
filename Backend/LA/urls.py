@@ -25,5 +25,12 @@ urlpatterns = [
     # path('admin/', admin.site.urls),
     path('hello_world/', views.hello_world, name='hello_world'),
     path('upload/', views.upload_file, name='upload_file'),
-    path('get_data/', views.get_data, name='get_data'),
+    path('plot_dendrogram/', views.plot_dendrogram, name='plot_dendrogram'),
+    path('plot_kMeans/', views.plot_KMeans, name='plot_KMeans'),
+    path('plot_kMedoids/', views.plot_KMedoids, name='plot_KMedoids'),
+    path('plot_BIRCH/', views.plot_BIRCH, name='plot_BIRCH'),
+    path('plot_DBSCAN/', views.plot_DBSCAN, name='plot_DBSCAN'),
+
+
+    # path('get_data/', views.get_data, name='get_data'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
