@@ -16,6 +16,8 @@ from .utils import data1
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn_extra.cluster import KMedoids
+from mlxtend.frequent_patterns import apriori
+from .temp import str
 
 
 X = Enahnce(np.array(data1))
@@ -286,43 +288,34 @@ def plot_DBSCAN(request):
     })
 
 
-def tabulate_cluster_accuracy(data):
-    # Converting the data to a NumPy array
-    data_array = data
-    # Perform KMeans clustering
-    kmeans = KMeans(n_clusters=3)
-    kmeans_labels = kmeans.fit_predict(data_array)
-    kmeans_accuracy = silhouette_score(data_array, kmeans_labels)
+    
+def preprocess_data():
+    
+    transactions = str
+    
+    return transactions
 
-    # Perform k-Medoids clustering
-    kmedoids = KMedoids(n_clusters=3)
-    kmedoids_labels = kmedoids.fit_predict(data_array)
-    kmedoids_accuracy = silhouette_score(data_array, kmedoids_labels)
+from mlxtend.preprocessing import TransactionEncoder
+from mlxtend.frequent_patterns import association_rules
+@csrf_exempt
+def association_rule(request):
+    
+    # Preprocess data
+    transactions = preprocess_data()
+    # print("11111")
+    # Use Apriori algorithm
+    te = TransactionEncoder()
+    te_ary = te.fit(transactions).transform(transactions)
+    df = pd.DataFrame(te_ary, columns=te.columns_)
 
-    # Perform DBSCAN clustering
-    dbscan = DBSCAN(eps=0.5, min_samples=5)
-    dbscan_labels = dbscan.fit_predict(data_array)
-    dbscan_accuracy = silhouette_score(data_array, dbscan_labels)
-
-    # Create a pandas DataFrame to tabulate the results
-    results_df = pd.DataFrame({
-        'Algorithm': ['KMeans', 'k-Medoids', 'DBSCAN'],
-        'Silhouette Score': [kmeans_accuracy, kmedoids_accuracy, dbscan_accuracy]
-    })
-
-    # Plot the table
-    fig, ax = plt.subplots(figsize=(8, 4))
-    ax.axis('off')
-    table = ax.table(cellText=results_df.values,
-                     colLabels=results_df.columns, cellLoc='center', loc='center')
-    table.auto_set_font_size(False)
-    table.set_fontsize(10)
-
-    # Save the plot to an image
-    img = BytesIO()
-    plt.savefig(img, format='png', bbox_inches='tight')
-    img.seek(0)
-
-    return JsonResponse({
-        'result': base64.b64encode(img.getvalue()).decode()
-    })
+    frequent_itemsets = apriori(df, min_support=0.01, use_colnames=True)
+    # print(frequent_itemsets,'items')
+    rules = association_rules(frequent_itemsets, metric="confidence", min_threshold=0.5)
+    print(rules,'rules it is')
+    # Display the rules
+    result = rules[['antecedents', 'consequents', 'support', 'confidence', 'lift']]
+    # print()
+    json_data = result.to_json(orient='records')
+    # print(json_data)
+    # Return JSON response
+    return JsonResponse(json_data, safe=False)

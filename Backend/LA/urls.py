@@ -30,6 +30,8 @@ urlpatterns = [
     path('plot_kMedoids/', views.plot_KMedoids, name='plot_KMedoids'),
     path('plot_BIRCH/', views.plot_BIRCH, name='plot_BIRCH'),
     path('plot_DBSCAN/', views.plot_DBSCAN, name='plot_DBSCAN'),
+    path('association_rule/', views.association_rule, name='association_rule'),
+
 
 
     # path('get_data/', views.get_data, name='get_data'),
